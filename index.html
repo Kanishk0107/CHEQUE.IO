@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheque.io | Premium Logging</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">CHEQUE.IO</div>
+        <div class="nav-links">
+            <button class="nav-item active" data-target="home">Home</button>
+            <button class="nav-item" data-target="issue">Issue Cheque</button>
+            <button class="nav-item" data-target="print">Print Cheque</button>
+            <button class="nav-item" data-target="report">Report</button>
+            <div style="width: 1px; height: 24px; background: var(--border-color); margin: 0 0.5rem;"></div>
+            <label class="theme-slider" for="themeToggle" title="Toggle Light/Dark Theme">
+                <input type="checkbox" id="themeToggle" checked>
+                <span class="slider-track">
+                    <span class="slider-thumb"></span>
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        style="display:flex; align-items:center;">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2"></path>
+                        <path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path>
+                        <path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path>
+                        <path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path>
+                        <path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        style="display:flex; align-items:center;">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </span>
+            </label>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HOME SECTION -->
+        <section id="home" class="view-section active">
+            <div style="text-align: center; margin-top: 10vh;">
+                <h1 class="title">Secure Cheque Management</h1>
+                <p class="subtitle" style="max-width: 600px; margin: 0 auto 3rem auto;">
+                    A streamlined, offline-first application for automating the issuing, logging, and printing of secure
+                    bank cheques with unmatched precision.
+                </p>
+                <div style="display: flex; justify-content: center; gap: 1rem;">
+                    <button class="btn-primary" onclick="switchTab('issue')">Issue New Cheque</button>
+                    <button class="btn-outline" onclick="switchTab('print')">Print Engine</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ISSUE CHEQUE SECTION -->
+        <section id="issue" class="view-section">
+            <div class="card" style="margin-bottom: 2rem;">
+                <h2 style="margin-bottom: 1.5rem; color: var(--accent-gold);">Log New Cheque</h2>
+                <form id="issueForm">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Cheque Date</label>
+                            <input type="date" id="chequeDate" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Company / Payee Name</label>
+                            <input type="text" id="payeeName" placeholder="e.g. Acme Corp" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Amount (Numeric)</label>
+                            <input type="number" id="chequeAmount" placeholder="0.00" step="0.01" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Cheque Type</label>
+                            <select id="chequeType">
+                                <option value="A/c Payee">A/c Payee</option>
+                                <option value="Bearer">Bearer</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Cheque Number</label>
+                            <input type="text" id="chequeNumber" placeholder="6 digit code" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Remarks / Bill Ref</label>
+                            <input type="text" id="remarks" placeholder="Optional reference">
+                        </div>
+                        <div class="input-group">
+                            <label>RTGS Beneficiary (For Back Print)</label>
+                            <input type="text" id="rtgsName" placeholder="Optional">
+                        </div>
+                        <div class="input-group" style="justify-content: flex-end;">
+                            <button type="submit" class="btn-primary">Save Record</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <table id="issuedTable">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Date</th>
+                            <th>Company Name</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Cheque No.</th>
+                            <th>Remarks</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="issuedTableBody">
+                        <!-- Populated via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PRINT CHEQUE SECTION -->
+        <section id="print" class="view-section">
+            <div style="display: flex; flex-direction: column; gap: 2rem; align-items: center;">
+
+                <!-- Top: Visual Preview -->
+                <div style="width: 100%; max-width: 900px;">
+                    <div class="card"
+                        style="display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #27272a;">
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Printing Preview Appears Below</p>
+
+                        <!-- This div holds exactly what gets printed -->
+                        <div id="printableArea" class="cheque-preview">
+                            <div id="previewContent">
+                                <!-- JS injects absolute positioned elements here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom: Controls -->
+                <div class="card" style="width: 100%; max-width: 900px;">
+                    <h2 style="margin-bottom: 1.5rem; color: var(--accent-gold);">Print Configuration</h2>
+
+                    <div class="input-group" style="margin-bottom: 1.5rem;">
+                        <label>Select Issued Cheque</label>
+                        <select id="printChequeSelect">
+                            <option value="">-- Choose a record --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 1.5rem; gap: 1rem;">
+                        <div class="input-group">
+                            <label>Template Alignment</label>
+                            <select id="bankTemplateSelect">
+                                <option value="UNIVERSAL">CTS-2010 Standard</option>
+                                <option value="SBI">State Bank of India</option>
+                                <option value="HDFC">HDFC Bank</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Scale / Aspect</label>
+                            <select id="printScale">
+                                <option value="1">100% (Default)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>X Offset (mm) <small>← Left / Right →</small></label>
+                            <input type="number" id="offsetX" value="0" step="0.5">
+                        </div>
+                        <div class="input-group">
+                            <label>Y Offset (mm) <small>↑ Up / Down ↓</small></label>
+                            <input type="number" id="offsetY" value="0" step="0.5">
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                        <button class="btn-outline active" id="btnFront"
+                            style="flex: 1; border-color: var(--accent-gold); color: var(--accent-gold);">Front
+                            Side</button>
+                        <button class="btn-outline" id="btnBack" style="flex: 1;">Back Side (RTGS)</button>
+                    </div>
+
+                    <h4 style="margin-bottom: 1rem; color: var(--text-secondary);">Security Formatting</h4>
+                    <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+                        <div class="input-group">
+                            <label>Amount Prefix</label>
+                            <input type="text" id="fmtPrefix" value="** ">
+                        </div>
+                        <div class="input-group">
+                            <label>Amount Suffix</label>
+                            <input type="text" id="fmtSuffix" value=" /-">
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" style="width: 100%; margin-top: 1rem;" onclick="triggerPrint()">Print
+                        Document</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- REPORT SECTION -->
+        <section id="report" class="view-section">
+            <div class="stat-grid" id="reportStats">
+                <!-- Injected via JS -->
+            </div>
+
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="color: var(--accent-gold);">Analytics Summary</h2>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <select id="filterMonth" class="btn-outline" style="padding: 0.5rem; cursor: pointer;"></select>
+                        <select id="filterYear" class="btn-outline" style="padding: 0.5rem; cursor: pointer;"></select>
+                        <button class="btn-outline" onclick="printReport()"
+                            style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2">
+                                </path>
+                                <rect x="6" y="14" width="12" height="8"></rect>
+                            </svg>
+                            Print Summary
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="reportTable">
+                        <thead>
+                            <tr>
+                                <th>Date Issued</th>
+                                <th>Company Name</th>
+                                <th>Cheque No.</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTableBody">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
