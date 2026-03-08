@@ -216,7 +216,25 @@
                         </div>
                     </div>
 
-                    <button class="btn-primary" style="width: 100%; margin-top: 1rem;" onclick="triggerPrint()">Print
+                    <div id="backSideOptions" style="display: none; margin-top: 1.5rem;">
+                        <h4 style="margin-bottom: 1rem; color: var(--text-secondary);">Back Side (RTGS) Options</h4>
+                        <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="input-group">
+                                <label>Bank Name</label>
+                                <input type="text" id="rtgsBankName" placeholder="E.g. SBI, HDFC" oninput="updatePreviewTemplate()">
+                            </div>
+                            <div class="input-group">
+                                <label>A/C Number</label>
+                                <input type="text" id="rtgsAcNo" placeholder="Account Number" oninput="updatePreviewTemplate()">
+                            </div>
+                            <div class="input-group" style="grid-column: span 2;">
+                                <label>IFSC Code</label>
+                                <input type="text" id="rtgsIfsc" placeholder="IFSC Code" oninput="updatePreviewTemplate()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" style="width: 100%; margin-top: 2rem;" onclick="triggerPrint()">Print
                         Document</button>
                 </div>
 

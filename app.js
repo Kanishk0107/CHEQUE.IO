@@ -247,6 +247,7 @@ document.getElementById('btnFront').addEventListener('click', function () {
     document.getElementById('btnBack').classList.remove('active');
     document.getElementById('btnBack').style.borderColor = 'var(--border-color)';
     document.getElementById('btnBack').style.color = 'var(--text-primary)';
+    document.getElementById('backSideOptions').style.display = 'none';
     updatePreviewTemplate();
 });
 
@@ -258,6 +259,7 @@ document.getElementById('btnBack').addEventListener('click', function () {
     document.getElementById('btnFront').classList.remove('active');
     document.getElementById('btnFront').style.borderColor = 'var(--border-color)';
     document.getElementById('btnFront').style.color = 'var(--text-primary)';
+    document.getElementById('backSideOptions').style.display = 'block';
     updatePreviewTemplate();
 });
 
@@ -296,7 +298,7 @@ function updatePreviewTemplate() {
         const tpl = BANK_TEMPLATES[templateId].front;
 
         previewArea.innerHTML = `
-            <div class="print-element" style="top: ${tpl.acPayee.y + baseOffsetY}mm; left: ${tpl.acPayee.x + baseOffsetX}mm; font-size: 16px; font-weight: bold; text-decoration: underline; text-decoration-style: double; transform: rotate(-35deg); transform-origin: center left;">
+            <div class="print-element" style="top: ${tpl.acPayee.y + baseOffsetY + 20}mm; left: ${tpl.acPayee.x + baseOffsetX}mm; font-size: 14px; font-weight: bold; border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 2px 10px; transform: rotate(-45deg); transform-origin: left bottom; white-space: nowrap;">
                 ${selectedRecordForPrint.type === 'A/c Payee' ? 'A/C PAYEE ONLY' : ''}
             </div>
             
@@ -316,11 +318,15 @@ function updatePreviewTemplate() {
         `;
     } else {
         // Back Side (RTGS)
+        const bBankName = document.getElementById('rtgsBankName').value || '_____________________';
+        const bAcNo = document.getElementById('rtgsAcNo').value || '_____________________';
+        const bIfsc = document.getElementById('rtgsIfsc').value || '_____________________';
+
         previewArea.innerHTML = `
             <div class="print-element" style="top: ${20 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">Beneficiary: ${escapeHTML(selectedRecordForPrint.rtgsName || selectedRecordForPrint.payee)}</div>
-            <div class="print-element" style="top: ${30 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">Bank Name: _____________________</div>
-            <div class="print-element" style="top: ${40 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">A/C: _____________________</div>
-            <div class="print-element" style="top: ${50 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">IFSC: _____________________</div>
+            <div class="print-element" style="top: ${30 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">Bank Name: ${escapeHTML(bBankName)}</div>
+            <div class="print-element" style="top: ${40 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">A/C: ${escapeHTML(bAcNo)}</div>
+            <div class="print-element" style="top: ${50 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">IFSC: ${escapeHTML(bIfsc)}</div>
             <div class="print-element" style="top: ${70 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">Signature:</div>
         `;
     }
