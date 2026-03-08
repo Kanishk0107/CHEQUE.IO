@@ -1,5 +1,11 @@
 {
+  "name": "cheque-io",
+  "version": "1.0.0",
+  "description": "Millimeter-accurate CTS-2010 cheque printing system",
+  "scripts": {
+    "test": "npx playwright test"
+  },
   "devDependencies": {
-    "@playwright/test": "^1.58.2"
+    "@playwright/test": "^1.40.0"
   }
 }

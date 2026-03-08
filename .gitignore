@@ -1,4 +1,8 @@
 node_modules/
 test-results/
-.env
+.playwright/
 .DS_Store
+Thumbs.db
+*.log
+.env
+.vercel
