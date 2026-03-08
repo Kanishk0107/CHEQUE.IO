@@ -298,7 +298,7 @@ function updatePreviewTemplate() {
         const tpl = BANK_TEMPLATES[templateId].front;
 
         previewArea.innerHTML = `
-            <div class="print-element" style="top: ${tpl.acPayee.y + baseOffsetY + 20}mm; left: ${tpl.acPayee.x + baseOffsetX}mm; font-size: 14px; font-weight: bold; border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 2px 10px; transform: rotate(-45deg); transform-origin: left bottom; white-space: nowrap;">
+            <div class="print-element" style="top: ${tpl.acPayee.y + baseOffsetY + 5}mm; left: ${tpl.acPayee.x + baseOffsetX}mm; font-size: 11px; font-weight: bold; border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 2px 6px; transform: rotate(-45deg); transform-origin: left bottom; white-space: nowrap;">
                 ${selectedRecordForPrint.type === 'A/c Payee' ? 'A/C PAYEE ONLY' : ''}
             </div>
             
