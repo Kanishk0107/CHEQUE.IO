@@ -298,8 +298,33 @@ function updatePreviewTemplate() {
         const tpl = BANK_TEMPLATES[templateId].front;
 
         previewArea.innerHTML = `
-            <div class="print-element" style="top: ${tpl.acPayee.y + baseOffsetY + 5}mm; left: ${tpl.acPayee.x + baseOffsetX}mm; font-size: 11px; font-weight: bold; border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 2px 6px; transform: rotate(-45deg); transform-origin: left bottom; white-space: nowrap;">
-                ${selectedRecordForPrint.type === 'A/c Payee' ? 'A/C PAYEE ONLY' : ''}
+            <!-- A/C PAYEE ONLY stamp - fixed positioning -->
+            <div class="print-element" style="
+                position: absolute;
+                top: ${tpl.acPayee.y + baseOffsetY}mm;
+                left: ${tpl.acPayee.x + baseOffsetX}mm;
+                width: 28mm;
+                height: 28mm;
+                overflow: hidden;
+                pointer-events: none;
+            ">
+                ${selectedRecordForPrint.type === 'A/c Payee' ? `
+                <div style="
+                    position: absolute;
+                    top: 14mm;
+                    left: -6mm;
+                    white-space: nowrap;
+                    font-size: 9px;
+                    font-weight: bold;
+                    font-family: monospace;
+                    letter-spacing: 1px;
+                    border-top: 1.5px solid #000;
+                    border-bottom: 1.5px solid #000;
+                    padding: 2px 8px;
+                    transform: rotate(-45deg);
+                    transform-origin: center center;
+                    background: transparent;
+                ">A/C PAYEE ONLY</div>` : ''}
             </div>
             
             <!-- Structural 8 Date Boxes Container -->
