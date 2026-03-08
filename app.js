@@ -311,16 +311,16 @@ function updatePreviewTemplate() {
                 ${selectedRecordForPrint.type === 'A/c Payee' ? `
                 <div style="
                     position: absolute;
-                    top: 14mm;
-                    left: -6mm;
+                    top: 6mm;
+                    left: -3mm;
                     white-space: nowrap;
                     font-size: 9px;
                     font-weight: bold;
                     font-family: monospace;
-                    letter-spacing: 1px;
+                    letter-spacing: .5px;
                     border-top: 1.5px solid #000;
                     border-bottom: 1.5px solid #000;
-                    padding: 2px 8px;
+                    padding: 2px 4px;
                     transform: rotate(-45deg);
                     transform-origin: center center;
                     background: transparent;
