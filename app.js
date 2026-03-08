@@ -296,7 +296,7 @@ function updatePreviewTemplate() {
         const tpl = BANK_TEMPLATES[templateId].front;
 
         previewArea.innerHTML = `
-            <div class="print-element" style="top: ${tpl.acPayee.y + baseOffsetY}mm; left: ${tpl.acPayee.x + baseOffsetX}mm; font-size: 16px; text-decoration: underline; text-decoration-style: double;">
+            <div class="print-element" style="top: ${tpl.acPayee.y + baseOffsetY}mm; left: ${tpl.acPayee.x + baseOffsetX}mm; font-size: 16px; font-weight: bold; text-decoration: underline; text-decoration-style: double; transform: rotate(-35deg); transform-origin: center left;">
                 ${selectedRecordForPrint.type === 'A/c Payee' ? 'A/C PAYEE ONLY' : ''}
             </div>
             
@@ -318,9 +318,10 @@ function updatePreviewTemplate() {
         // Back Side (RTGS)
         previewArea.innerHTML = `
             <div class="print-element" style="top: ${20 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">Beneficiary: ${escapeHTML(selectedRecordForPrint.rtgsName || selectedRecordForPrint.payee)}</div>
-            <div class="print-element" style="top: ${30 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">A/C: _____________________</div>
-            <div class="print-element" style="top: ${40 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">IFSC: _____________________</div>
-            <div class="print-element" style="top: ${60 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">Signature:</div>
+            <div class="print-element" style="top: ${30 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">Bank Name: _____________________</div>
+            <div class="print-element" style="top: ${40 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">A/C: _____________________</div>
+            <div class="print-element" style="top: ${50 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">IFSC: _____________________</div>
+            <div class="print-element" style="top: ${70 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">Signature:</div>
         `;
     }
 }
