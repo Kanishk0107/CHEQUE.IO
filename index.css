@@ -326,7 +326,7 @@ tr:hover td {
   overflow: visible;
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-lg);
-  transform-origin: top left;
+  transform-origin: top center;
 }
 
 /* Dynamic overlay elements for preview */
@@ -501,6 +501,73 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* ----------------------------------------------------
+   RESPONSIVE DESIGN (Screen)
+   ---------------------------------------------------- */
+@media screen and (max-width: 900px) {
+  .cheque-preview {
+    transform: scale(0.85);
+    margin-bottom: -10mm;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  nav {
+    flex-wrap: wrap;
+    padding: 1rem;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  main {
+    padding: 1.5rem 1rem;
+  }
+  
+  .card {
+    padding: 1.25rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cheque-preview {
+    transform: scale(0.65);
+    margin-bottom: -30mm;
+  }
+  
+  .btn-primary, .btn-outline {
+    min-height: 44px;
+    width: 100%;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .logo {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .cheque-preview {
+    transform: scale(0.40);
+    margin-bottom: -50mm;
+  }
+  
+  .stat-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ----------------------------------------------------
    PRINT MEDIA QUERY
    This handles actual physical printing, hiding UI
    ---------------------------------------------------- */
@@ -548,6 +615,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     overflow: hidden !important;
     page-break-after: avoid;
     page-break-inside: avoid;
+    transform: none !important;
   }
 
   body:not(.print-report-mode) .print-element {
