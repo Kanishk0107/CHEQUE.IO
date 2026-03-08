@@ -138,6 +138,13 @@ main {
   display: block;
 }
 
+#home.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: calc(100vh - 12rem);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -400,6 +407,49 @@ tr:hover td {
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+/* Home Footer */
+.home-footer {
+  margin-top: auto;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.home-footer p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.connect-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.connect-links a.icon-link {
+  text-decoration: none;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.connect-links a.icon-link:hover {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold);
 }
 
 /* Custom Theme Toggle */
