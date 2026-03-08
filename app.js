@@ -39,6 +39,20 @@ function getRecords() {
     return data ? JSON.parse(data) : [];
 }
 
+// XSS Prevention Utility
+function escapeHTML(str) {
+    if (typeof str !== 'string') return str;
+    return str.replace(/[&<>'"]/g, 
+        tag => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+        }[tag])
+    );
+}
+
 function saveRecord(record) {
     const records = getRecords();
     records.push({
@@ -127,12 +141,12 @@ function refreshUI() {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${index + 1}</td>
-            <td>${new Date(record.date).toLocaleDateString('en-GB')}</td>
-            <td>${record.payee}</td>
-            <td style="color: var(--accent-gold);">${currencyFormatter.format(record.amount)}</td>
-            <td>${record.type}</td>
-            <td>${record.chequeNo}</td>
-            <td>${record.remarks || '-'}</td>
+            <td>${escapeHTML(new Date(record.date).toLocaleDateString('en-GB'))}</td>
+            <td>${escapeHTML(record.payee)}</td>
+            <td style="color: var(--accent-gold);">${escapeHTML(currencyFormatter.format(record.amount))}</td>
+            <td>${escapeHTML(record.type)}</td>
+            <td>${escapeHTML(record.chequeNo)}</td>
+            <td>${escapeHTML(record.remarks || '-')}</td>
             <td class="actions-cell">
                 <div style="display: flex; gap: 0.5rem; align-items: center;">
                     <button class="btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="goToPrint(${record.id})">Print</button>
@@ -199,7 +213,7 @@ function numberToWords(num) {
         }
     }
 
-    return result ? result + ' Only' : 'Zero Only';
+    return result ? 'Rupees ' + result + ' Only' : 'Rupees Zero Only';
 }
 
 // Printing Engine Logic
@@ -291,19 +305,19 @@ function updatePreviewTemplate() {
                 ${dateHtmlBoxes}
             </div>
             <div class="print-element" style="top: ${tpl.payee.y + baseOffsetY}mm; left: ${tpl.payee.x + baseOffsetX}mm;">
-                ${selectedRecordForPrint.payee}
+                ${escapeHTML(selectedRecordForPrint.payee)}
             </div>
             <div class="print-element" style="top: ${tpl.amountWords.y + baseOffsetY}mm; left: ${tpl.amountWords.x + baseOffsetX}mm; width: ${tpl.amountWords.width}mm; line-height: 1.5;">
-                ${numberToWords(selectedRecordForPrint.amount)}
+                ${escapeHTML(numberToWords(selectedRecordForPrint.amount))}
             </div>
             <div class="print-element" style="top: ${tpl.amountFig.y + baseOffsetY}mm; left: ${tpl.amountFig.x + baseOffsetX}mm;">
-                ${formattedAmount}
+                ${escapeHTML(formattedAmount)}
             </div>
         `;
     } else {
         // Back Side (RTGS)
         previewArea.innerHTML = `
-            <div class="print-element" style="top: ${20 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">Beneficiary: ${selectedRecordForPrint.rtgsName || selectedRecordForPrint.payee}</div>
+            <div class="print-element" style="top: ${20 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">Beneficiary: ${escapeHTML(selectedRecordForPrint.rtgsName || selectedRecordForPrint.payee)}</div>
             <div class="print-element" style="top: ${30 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">A/C: _____________________</div>
             <div class="print-element" style="top: ${40 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">IFSC: _____________________</div>
             <div class="print-element" style="top: ${60 + baseOffsetY}mm; left: ${20 + baseOffsetX}mm;">Signature:</div>
@@ -389,10 +403,10 @@ function renderReport() {
     records.forEach(r => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td style="white-space: nowrap;">${new Date(r.date).toLocaleDateString('en-GB')}</td>
-            <td><strong>${r.payee}</strong></td>
-            <td>${r.chequeNo}</td>
-            <td style="color: var(--accent-gold); font-weight: 600;">${currencyFormatter.format(r.amount)}</td>
+            <td style="white-space: nowrap;">${escapeHTML(new Date(r.date).toLocaleDateString('en-GB'))}</td>
+            <td><strong>${escapeHTML(r.payee)}</strong></td>
+            <td>${escapeHTML(r.chequeNo)}</td>
+            <td style="color: var(--accent-gold); font-weight: 600;">${escapeHTML(currencyFormatter.format(r.amount))}</td>
             <td><span style="padding: 2px 8px; border-radius: 12px; background: rgba(22, 48, 43, 0.5); border: 1px solid var(--accent-gold); color: var(--accent-gold); font-size: 0.75rem;">Issued</span></td>
         `;
         tbody.appendChild(tr);
